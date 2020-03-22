@@ -20,30 +20,21 @@ public class SampleControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+
     @Test
-    public void helloTest() throws  Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/hello")
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .accept(MediaType.TEXT_PLAIN_VALUE))
+    public void eventForm() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/events/form"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void helloTest() throws  Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/events?name=sungwon")
+        .param("name","sungwon").param("limit","-10"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/hello1")
-                .header(HttpHeaders.FROM,1).param("name","t"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
-        mockMvc.perform(MockMvcRequestBuilders.options("/hello2"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.header().stringValues(HttpHeaders.ALLOW,"GET,HEAD,POST,OPTIONS"));
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/hello5"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
-        }
 
 
 
